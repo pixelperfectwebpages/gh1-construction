@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Contact — Request a Free Estimate — GH1 Construction</title>
+<meta name="description" content="Tell us about your project and we'll get back to you within one business day. No pressure, no obligation.">
+<link rel="stylesheet" href="css/tokens.css">
+<link rel="stylesheet" href="css/styles.css">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="site-header__row">
+    <a href="index.html" class="site-header__logo"><img src="assets/gh1-logo.png" alt="GH1 Construction"></a>
+    <nav class="nav">
+      <a href="index.html" class="nav__link">Home</a>
+      <a href="services.html" class="nav__link">Services</a>
+      <a href="gallery.html" class="nav__link">Gallery</a>
+      <a href="reviews.html" class="nav__link">Reviews</a>
+      <a href="about.html" class="nav__link">About</a>
+      <a href="contact.html" class="nav__link is-active">Contact</a>
+      <a href="tel:6194055213" class="nav__phone"><i data-lucide="phone" style="width:16px;height:16px"></i>(619) 405-5213</a>
+    </nav>
+    <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false"><i data-lucide="menu"></i></button>
+  </div>
+</header>
+
+<main class="contact-page">
+  <div class="contact-grid">
+    <div>
+      <span class="badge badge--accent">Get In Touch</span>
+      <h1 class="contact-title">Request a Free Estimate</h1>
+      <p class="contact-lead">Tell us about your project and we'll get back to you within one business day. No pressure, no obligation — just an honest conversation.</p>
+
+      <div class="contact-info">
+        <div class="contact-info__item">
+          <div class="contact-info__icon"><i data-lucide="phone"></i></div>
+          <div><div class="contact-info__label">Call or text</div><a class="contact-info__value" href="tel:6194055213">(619) 405-5213</a></div>
+        </div>
+        <div class="contact-info__item">
+          <div class="contact-info__icon"><i data-lucide="mail"></i></div>
+          <div><div class="contact-info__label">Email</div><a class="contact-info__value" href="mailto:ghoraites@yahoo.com">ghoraites@yahoo.com</a></div>
+        </div>
+        <div class="contact-info__item">
+          <div class="contact-info__icon"><i data-lucide="map-pin"></i></div>
+          <div><div class="contact-info__label">Service area</div><div class="contact-info__value">Greater Chicagoland area &amp; northwest suburbs</div></div>
+        </div>
+        <div class="contact-info__item">
+          <div class="contact-info__icon"><i data-lucide="clock"></i></div>
+          <div><div class="contact-info__label">Hours</div><div class="contact-info__value">Mon–Fri · 7:00 AM – 7:00 PM</div></div>
+        </div>
+      </div>
+
+      <div class="contact-badges">
+        <span class="badge badge--outline">Licensed</span>
+        <span class="badge badge--outline">Insured</span>
+        <span class="badge badge--success">Free Estimates</span>
+      </div>
+    </div>
+
+    <div class="contact-form-card">
+      <form class="contact-form">
+        <div class="contact-form__grid">
+          <div class="field">
+            <label class="field__label" for="full-name">Full Name<span class="field__required">*</span></label>
+            <input class="input" id="full-name" name="name" type="text" placeholder="Jane Homeowner" required>
+          </div>
+          <div class="field">
+            <label class="field__label" for="phone">Phone<span class="field__required">*</span></label>
+            <input class="input" id="phone" name="phone" type="tel" placeholder="(619) 405-5213" required>
+          </div>
+          <div class="field field--full">
+            <label class="field__label" for="email">Email<span class="field__required">*</span></label>
+            <input class="input" id="email" name="email" type="email" placeholder="jane@email.com" required>
+          </div>
+          <div class="field">
+            <label class="field__label" for="project-type">Project Type</label>
+            <div class="select-wrap">
+              <select class="select" id="project-type" name="project_type" required>
+                <option value="" selected disabled>Select a service…</option>
+                <option>Kitchen</option>
+                <option>Bathroom</option>
+                <option>Basement</option>
+                <option>Porch or Deck</option>
+                <option>Flooring</option>
+                <option>Drywall</option>
+                <option>Electrical</option>
+                <option>Painting</option>
+                <option>Plumbing</option>
+                <option>Other</option>
+              </select>
+            </div>
+          </div>
+          <div class="field">
+            <label class="field__label" for="budget">Budget Range</label>
+            <div class="select-wrap">
+              <select class="select" id="budget" name="budget" required>
+                <option value="" selected disabled>Choose a range…</option>
+                <option>$0 – $5,000</option>
+                <option>$5,000 – $10,000</option>
+                <option>$10,000 – $15,000</option>
+                <option>$15,000 – $20,000</option>
+                <option>$20,000+</option>
+              </select>
+            </div>
+          </div>
+          <div class="field field--full">
+            <label class="field__label" for="details">Project Details</label>
+            <textarea class="textarea" id="details" name="details" rows="4" placeholder="Tell us what you have in mind — timeline, scope, must-haves…"></textarea>
+          </div>
+        </div>
+        <div class="contact-form__submit">
+          <button type="submit" class="btn btn--accent btn--lg btn--full">Request My Free Estimate <i data-lucide="arrow-right" style="width:18px;height:18px"></i></button>
+        </div>
+        <p class="contact-form__note">We respect your inbox — no spam, ever.</p>
+      </form>
+
+      <div class="form-success" style="display:none">
+        <div class="form-success__icon"><i data-lucide="check" style="width:30px;height:30px"></i></div>
+        <h3 class="form-success__title">Thanks — we'll be in touch</h3>
+        <p class="form-success__lead">We reply within one business day. Talk soon!</p>
+        <button type="button" class="btn btn--secondary form-success__again">Send Another</button>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="site-footer__grid">
+    <div class="site-footer__brand">
+      <img src="assets/gh1-logo.png" alt="GH1 Construction">
+      <p>Built through referrals, not advertising. Honest communication and craftsmanship built to last.</p>
+    </div>
+    <div>
+      <div class="site-footer__heading">Renovations</div>
+      <ul class="site-footer__links">
+        <li><a href="services.html">Kitchens</a></li>
+        <li><a href="services.html">Bathrooms</a></li>
+        <li><a href="services.html">Basements</a></li>
+        <li><a href="services.html">Porches &amp; Decks</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="site-footer__heading">Company</div>
+      <ul class="site-footer__links">
+        <li><a href="about.html">About GH1</a></li>
+        <li><a href="gallery.html">Our Work</a></li>
+        <li><a href="reviews.html">Reviews</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="site-footer__heading">Get In Touch</div>
+      <div class="site-footer__contact">
+        <span><i data-lucide="phone" style="width:15px;height:15px"></i><a href="tel:6194055213">(619) 405-5213 · call or text</a></span>
+        <span><i data-lucide="mail" style="width:15px;height:15px"></i><a href="mailto:ghoraites@yahoo.com">ghoraites@yahoo.com</a></span>
+        <span><i data-lucide="map-pin" style="width:15px;height:15px"></i>Serving the greater Chicagoland area &amp; northwest suburbs</span>
+      </div>
+    </div>
+  </div>
+  <div class="site-footer__bottom">
+    <div class="site-footer__bottom-row">
+      <span>© 2026 GH1 Construction. Licensed &amp; Insured.</span>
+      <span>Remodel · Renovate · Transform</span>
+    </div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,151 @@
+/* GH1 Construction — design tokens
+   Source: GH1 Brand Guidelines (Colors & Fonts) + coolors palette. */
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Oswald:wght@400;500;600;700&family=Montserrat:wght@400;500;600;700&family=Source+Sans+3:ital,wght@0,400;0,600;1,400&display=swap');
+
+:root {
+  /* ---- Brand palette (base) ---- */
+  --gh1-prussian-blue: #122B4A;
+  --gh1-graphite:      #2E2E2E;
+  --gh1-baltic-blue:   #355C9A;
+  --gh1-grey:          #7B8288;
+  --gh1-platinum:      #E9ECEF;
+  --gh1-white:         #FFFFFF;
+
+  /* ---- Extended neutrals ---- */
+  --gh1-ink:        #1B1B1B;
+  --gh1-slate-700:  #3A4048;
+  --gh1-slate-500:  #7B8288;
+  --gh1-slate-300:  #B9BEC4;
+  --gh1-slate-200:  #D5D9DE;
+  --gh1-slate-100:  #E9ECEF;
+  --gh1-slate-50:   #F4F6F8;
+
+  /* ---- Accent tints/shades (Baltic Blue) ---- */
+  --gh1-baltic-700: #274678;
+  --gh1-baltic-600: #2E5089;
+  --gh1-baltic-500: #355C9A;
+  --gh1-baltic-400: #5478B0;
+  --gh1-baltic-100: #DCE4F1;
+
+  /* ---- Prussian shades ---- */
+  --gh1-prussian-900: #0C1E36;
+  --gh1-prussian-700: #122B4A;
+  --gh1-prussian-500: #1D3D63;
+
+  /* ---- Semantic ---- */
+  --gh1-success: #2E7D53;
+  --gh1-warning: #C9821A;
+  --gh1-danger:  #B23A32;
+
+  /* ---- Semantic aliases (use these in UI) ---- */
+  --color-bg:            var(--gh1-white);
+  --color-bg-subtle:     var(--gh1-slate-50);
+  --color-surface:       var(--gh1-white);
+  --color-surface-alt:   var(--gh1-platinum);
+  --color-surface-dark:  var(--gh1-prussian-blue);
+
+  --color-text:          var(--gh1-graphite);
+  --color-text-strong:   var(--gh1-ink);
+  --color-text-muted:    var(--gh1-grey);
+  --color-text-inverse:  var(--gh1-white);
+  --color-text-on-dark-muted: #9FB0C6;
+
+  --color-accent:        var(--gh1-baltic-blue);
+  --color-accent-hover:  var(--gh1-baltic-600);
+  --color-accent-press:  var(--gh1-baltic-700);
+  --color-accent-soft:   var(--gh1-baltic-100);
+
+  --color-primary:       var(--gh1-prussian-blue);
+  --color-primary-hover: var(--gh1-prussian-500);
+
+  --color-border:        var(--gh1-slate-200);
+  --color-border-strong: var(--gh1-slate-300);
+  --color-divider:       #D9DDE2;
+
+  --color-link:          var(--gh1-baltic-blue);
+  --color-focus-ring:    rgba(53, 92, 154, 0.45);
+
+  /* ---- Families ---- */
+  --font-display: 'Bebas Neue', 'Oswald', 'Arial Narrow', sans-serif;
+  --font-heading: 'Oswald', 'Arial Narrow', sans-serif;
+  --font-body:    'Montserrat', 'Helvetica Neue', Arial, sans-serif;
+  --font-caption: 'Source Sans 3', 'Source Sans Pro', 'Segoe UI', sans-serif;
+
+  /* ---- Weights ---- */
+  --fw-regular: 400;
+  --fw-medium:  500;
+  --fw-semibold:600;
+  --fw-bold:    700;
+
+  /* ---- Type scale ---- */
+  --fs-display-1: 88px;
+  --fs-display-2: 64px;
+  --fs-h1: 48px;
+  --fs-h2: 38px;
+  --fs-h3: 28px;
+  --fs-h4: 22px;
+  --fs-subhead: 18px;
+  --fs-body-lg: 18px;
+  --fs-body: 16px;
+  --fs-body-sm: 14px;
+  --fs-caption: 13px;
+
+  /* ---- Line heights ---- */
+  --lh-tight: 1.02;
+  --lh-snug: 1.15;
+  --lh-normal: 1.55;
+  --lh-relaxed: 1.7;
+
+  /* ---- Letter spacing ---- */
+  --ls-display: 0.01em;
+  --ls-eyebrow: 0.18em;
+  --ls-label: 0.06em;
+  --ls-body: 0;
+
+  /* ---- Spacing (4px base) ---- */
+  --space-0: 0;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+  --space-24: 96px;
+  --space-32: 128px;
+
+  /* ---- Radius ---- */
+  --radius-none: 0;
+  --radius-sm: 3px;
+  --radius-md: 5px;
+  --radius-lg: 8px;
+  --radius-pill: 999px;
+
+  /* ---- Borders ---- */
+  --border-width: 1px;
+  --border-width-heavy: 2px;
+  --border-accent-width: 4px;
+
+  /* ---- Shadows ---- */
+  --shadow-xs: 0 1px 2px rgba(18, 43, 74, 0.06);
+  --shadow-sm: 0 2px 6px rgba(18, 43, 74, 0.08);
+  --shadow-md: 0 6px 18px rgba(18, 43, 74, 0.10);
+  --shadow-lg: 0 16px 40px rgba(18, 43, 74, 0.14);
+
+  /* ---- Layout ---- */
+  --container-max: 1200px;
+  --container-narrow: 760px;
+  --section-pad-y: 96px;
+  --header-height: 76px;
+
+  /* ---- Motion ---- */
+  --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --dur-fast: 140ms;
+  --dur-base: 220ms;
+  --dur-slow: 380ms;
+}
