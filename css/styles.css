@@ -766,7 +766,7 @@ img { max-width: 100%; display: block; }
 }
 .gallery-tile__count-badge svg { width: 12px; height: 12px; }
 .gallery-tile__split { display: grid; grid-template-columns: 1fr 1fr; height: 100%; gap: 2px; background: var(--color-border); }
-.gallery-tile__split .photo-slot, .gallery-tile__split .project-photo { height: 100%; border-radius: 0; border: none; }
+.gallery-tile__split .photo-slot, .gallery-tile__split .project-photo { height: 100%; border-radius: 0; border: none; object-fit: cover; }
 .gallery-tile__ba-tag {
   position: absolute;
   top: 10px;
@@ -783,7 +783,7 @@ img { max-width: 100%; display: block; }
 .gallery-tile__ba-tag--before { background: rgba(46, 46, 46, 0.82); }
 .gallery-tile__ba-tag--after { background: var(--color-accent); }
 .gallery-tile__single { height: 100%; }
-.gallery-tile__single .photo-slot, .gallery-tile__single .project-photo { height: 100%; border-radius: 0; border: none; }
+.gallery-tile__single .photo-slot, .gallery-tile__single .project-photo { height: 100%; border-radius: 0; border: none; object-fit: cover; }
 .gallery-tile__caption {
   position: absolute;
   left: 0; right: 0; bottom: 0;
