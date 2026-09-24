@@ -277,8 +277,10 @@ img { max-width: 100%; display: block; }
   border-radius: var(--radius-md);
   border: 1px solid var(--color-border);
 }
-/* Hero and Services page photos crop to fill their box (no letterboxing) */
-.hero .project-photo, .reno-row__media .project-photo { object-fit: cover; }
+/* Hero photo crops to fill its box (no letterboxing) */
+.hero .project-photo { object-fit: cover; }
+/* Services page photos render at their own natural size, capped so they don't overwhelm the page */
+.reno-row__media .project-photo { width: auto; height: auto; max-width: 100%; max-height: 480px; }
 
 /* ---------------------------------------------------------------- */
 /* Service card                                                      */
