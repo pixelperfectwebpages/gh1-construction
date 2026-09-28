@@ -1148,6 +1148,8 @@ img { max-width: 100%; display: block; }
   .nav-toggle { display: inline-flex; }
 
   .hero__inner, .about-intro, .why-us, .page-header--split, .contact-grid { grid-template-columns: 1fr; }
+  .hero__inner > div:first-child, .about-intro > div:first-child, .page-header__inner { text-align: center; }
+  .hero__actions { justify-content: center; }
   .services-grid, .values-grid { grid-template-columns: repeat(2, 1fr); }
   .why-us__list { grid-template-columns: 1fr 1fr; }
   .trades-grid, .process-grid { grid-template-columns: repeat(2, 1fr); }
@@ -1161,6 +1163,19 @@ img { max-width: 100%; display: block; }
   .site-footer__grid { grid-template-columns: 1fr 1fr; }
   .contact-form__grid { grid-template-columns: 1fr; }
   .contact-form__grid .field--full { grid-column: auto; }
+
+  /* Filter chips scroll horizontally in one line instead of wrapping into a
+     tall, ragged grid that pushes the actual gallery photos far down the page. */
+  .filter-row {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    margin: 0 -32px;
+    padding: 0 32px;
+  }
+  .filter-row::-webkit-scrollbar { display: none; }
+  .filter-chip { flex-shrink: 0; }
 }
 
 @media (max-width: 620px) {
