@@ -291,6 +291,8 @@ img { max-width: 100%; display: block; }
 .hero .project-photo { object-fit: cover; }
 /* Services page photos render at their own natural size, capped so they don't overwhelm the page */
 .reno-row__media .project-photo { width: auto; height: auto; max-width: 100%; max-height: 480px; }
+/* Why Choose Us photo and About page portrait crop to fill their box flush, no letterbox border */
+.why-us .project-photo, .about-intro .project-photo { object-fit: cover; }
 
 /* ---------------------------------------------------------------- */
 /* Service card                                                      */
