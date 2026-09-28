@@ -102,8 +102,26 @@
       e.preventDefault();
       var card = form.closest('.contact-form-card');
       var success = card.querySelector('.form-success');
-      form.style.display = 'none';
-      success.style.display = 'block';
+      var submitBtn = form.querySelector('button[type="submit"]');
+      var originalLabel = submitBtn.innerHTML;
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Sending…';
+
+      fetch(form.action, {
+        method: 'POST',
+        body: new FormData(form),
+        headers: { Accept: 'application/json' }
+      })
+        .then(function (res) {
+          if (!res.ok) throw new Error('Submission failed');
+          form.style.display = 'none';
+          success.style.display = 'block';
+        })
+        .catch(function () {
+          alert("Something went wrong sending your request. Please call or text (619) 405-5213, or email ghoraites@yahoo.com directly.");
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = originalLabel;
+        });
     });
     var again = document.querySelector('.form-success__again');
     if (again) {
