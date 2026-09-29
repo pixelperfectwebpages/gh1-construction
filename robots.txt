@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /reviews.html
+
+Sitemap: https://gh1construction.com/sitemap.xml
