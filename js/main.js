@@ -133,4 +133,64 @@
       });
     }
   }
+
+  var liveGrid = document.getElementById('reviewsLiveGrid');
+  var emptyState = document.getElementById('reviewsEmptyState');
+  var scoreRow = document.getElementById('ratingScoreRow');
+  if (liveGrid && emptyState) {
+    function starRow(rating) {
+      var full = Math.round(rating);
+      var star = '<svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14l-5-4.87 6.91-1.01L12 2z"></path></svg>';
+      var out = '';
+      for (var i = 0; i < 5; i++) out += star;
+      return '<span style="display:inline-flex;gap:2px;color:' + '#FBBC04' + '">' + out + '</span>';
+    }
+
+    function initials(name) {
+      return (name || '?').trim().charAt(0).toUpperCase();
+    }
+
+    function escapeHtml(str) {
+      var div = document.createElement('div');
+      div.textContent = str || '';
+      return div.innerHTML;
+    }
+
+    fetch('/api/reviews')
+      .then(function (res) { if (!res.ok) throw new Error('not ready'); return res.json(); })
+      .then(function (data) {
+        if (!data.reviews || !data.reviews.length) return;
+
+        if (scoreRow && data.rating) {
+          scoreRow.innerHTML =
+            '<span class="rating-card__score">' + data.rating.toFixed(1) + '</span>' +
+            '<div>' + starRow(data.rating) +
+            '<div class="rating-card__count">Based on ' + data.reviewCount + ' review' + (data.reviewCount === 1 ? '' : 's') + '</div></div>';
+        }
+
+        liveGrid.innerHTML = data.reviews.map(function (r) {
+          var avatar = r.photoUrl
+            ? '<img src="' + r.photoUrl + '" alt="" style="width:100%;height:100%;border-radius:999px;object-fit:cover">'
+            : initials(r.name);
+          return (
+            '<div class="review-card">' +
+              '<div class="review-card__head">' +
+                '<div class="review-card__who">' +
+                  '<div class="review-card__avatar">' + avatar + '</div>' +
+                  '<div><div class="review-card__name">' + escapeHtml(r.name) + '</div></div>' +
+                '</div>' +
+              '</div>' +
+              '<div class="review-card__meta">' + starRow(r.rating) + '<span>' + escapeHtml(r.relativeTime) + '</span></div>' +
+              '<p class="review-card__body">' + escapeHtml(r.text) + '</p>' +
+            '</div>'
+          );
+        }).join('');
+
+        emptyState.hidden = true;
+        liveGrid.hidden = false;
+      })
+      .catch(function () {
+        // Leave the honest "no reviews yet" empty state showing — nothing to do.
+      });
+  }
 })();

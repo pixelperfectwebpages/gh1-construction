@@ -70,8 +70,8 @@
           </svg>
           <span>Google Reviews</span>
         </div>
-        <div class="rating-card__score-row">
-          <div class="rating-card__count" style="margin:0">We just launched on Google — be the first to leave us a review!</div>
+        <div class="rating-card__score-row" id="ratingScoreRow">
+          <div class="rating-card__count" style="margin:0" id="ratingFallbackText">We just launched on Google — be the first to leave us a review!</div>
         </div>
         <a href="https://g.page/r/CaYtEZFptYKIEBM" target="_blank" rel="noopener noreferrer" class="rating-card__link">
           <svg width="16" height="16" viewBox="0 0 48 48" aria-hidden="true">
@@ -87,7 +87,7 @@
   </section>
 
   <section class="section" style="padding:64px 32px 40px">
-    <div class="reviews-empty">
+    <div class="reviews-empty" id="reviewsEmptyState">
       <div class="reviews-empty__icon"><i data-lucide="star" style="width:32px;height:32px"></i></div>
       <h2 class="reviews-empty__title">No reviews yet — yours could be the first</h2>
       <p class="reviews-empty__lead">We just launched our Google Business profile. If GH1 has worked on your home, a quick review goes a long way for a referral-based business like ours.</p>
@@ -101,6 +101,7 @@
         Write the First Google Review
       </a>
     </div>
+    <div class="reviews-grid" id="reviewsLiveGrid" hidden></div>
   </section>
 
   <section class="section" style="padding:20px 32px 80px">
