@@ -15,10 +15,15 @@
 
 const BUSINESS_QUERY = 'GH1 Construction, 5828 W Waveland Ave, Chicago, IL 60634';
 const CACHE_TTL_SECONDS = 6 * 60 * 60; // 6 hours
+// Bump this whenever the resolution/validation logic changes, so a bad
+// cached response (e.g. the wrong business) can't outlive a fix — it
+// changes the cache key, so old entries are simply never matched again.
+const CACHE_VERSION = 'v2';
 
 export async function onRequestGet(context) {
   const { env, request } = context;
   const cacheUrl = new URL(request.url);
+  cacheUrl.searchParams.set('v', CACHE_VERSION);
   const cacheKey = new Request(cacheUrl.toString(), request);
   const cache = caches.default;
 
@@ -36,6 +41,14 @@ export async function onRequestGet(context) {
     }
 
     const details = await fetchPlaceDetails(placeId, env.GOOGLE_PLACES_API_KEY);
+
+    // Second safety check, independent of resolvePlaceId's own check — never
+    // serve another business's real reviews under GH1's name.
+    var detailsName = (details.displayName && details.displayName.text || '').toLowerCase();
+    var detailsPhone = details.nationalPhoneNumber || '';
+    if (detailsName.indexOf('gh1') === -1 && detailsPhone.indexOf('405-5213') === -1) {
+      return jsonResponse({ error: 'Resolved place did not match GH1 Construction.' }, 502);
+    }
 
     const payload = {
       rating: details.rating || null,
@@ -65,20 +78,32 @@ async function resolvePlaceId(apiKey) {
     headers: {
       'Content-Type': 'application/json',
       'X-Goog-Api-Key': apiKey,
-      'X-Goog-FieldMask': 'places.id',
+      'X-Goog-FieldMask': 'places.id,places.displayName,places.nationalPhoneNumber',
     },
     body: JSON.stringify({ textQuery: BUSINESS_QUERY }),
   });
   if (!res.ok) return null;
   const data = await res.json();
-  return data.places && data.places[0] ? data.places[0].id : null;
+  if (!data.places || !data.places.length) return null;
+
+  // Safety check: Text Search can return unrelated nearby businesses for a
+  // brand-new, address-hidden listing like this one. Never trust places[0]
+  // blindly — only accept a result whose name or phone number actually
+  // matches GH1, otherwise it's safer to show nothing than someone else's
+  // real reviews under GH1's name.
+  var match = data.places.find(function (p) {
+    var name = (p.displayName && p.displayName.text || '').toLowerCase();
+    var phone = p.nationalPhoneNumber || '';
+    return name.indexOf('gh1') !== -1 || phone.indexOf('405-5213') !== -1;
+  });
+  return match ? match.id : null;
 }
 
 async function fetchPlaceDetails(placeId, apiKey) {
   const res = await fetch(`https://places.googleapis.com/v1/places/${placeId}`, {
     headers: {
       'X-Goog-Api-Key': apiKey,
-      'X-Goog-FieldMask': 'rating,userRatingCount,reviews',
+      'X-Goog-FieldMask': 'displayName,nationalPhoneNumber,rating,userRatingCount,reviews',
     },
   });
   if (!res.ok) throw new Error('Place Details request failed');
