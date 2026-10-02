@@ -156,7 +156,7 @@
       return div.innerHTML;
     }
 
-    fetch('/api/reviews')
+    fetch('/api/reviews', { cache: 'no-store' })
       .then(function (res) { if (!res.ok) throw new Error('not ready'); return res.json(); })
       .then(function (data) {
         if (!data.reviews || !data.reviews.length) return;
