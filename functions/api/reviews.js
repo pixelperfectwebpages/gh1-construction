@@ -9,16 +9,22 @@
 //
 // The key must be restricted (in Google Cloud Console) to:
 //   - API restriction: Places API (New) only
-//   - Application restriction: HTTP referrers -> gh1construction.com/*
-// Since this function runs server-side on Cloudflare, the key is never sent
-// to the browser.
+// (Application/website restriction is intentionally NOT used — this key is
+// called server-side from Cloudflare, not from the visitor's browser, so
+// there's no real HTTP referrer to check.)
+//
+// Always returns HTTP 200 with a JSON body, even when no reviews are found
+// yet. Non-2xx statuses get intercepted by Cloudflare and replaced with its
+// own branded error page, which would hide our actual JSON — easier to just
+// let the front-end check `reviews.length` instead of the status code.
 
 const BUSINESS_QUERY = 'GH1 Construction, 5828 W Waveland Ave, Chicago, IL 60634';
-const CACHE_TTL_SECONDS = 6 * 60 * 60; // 6 hours
+const SUCCESS_CACHE_SECONDS = 6 * 60 * 60; // 6 hours — real review data changes rarely
+const EMPTY_CACHE_SECONDS = 15 * 60; // 15 minutes — so a real match isn't hidden for long once Google's index catches up
 // Bump this whenever the resolution/validation logic changes, so a bad
 // cached response (e.g. the wrong business) can't outlive a fix — it
 // changes the cache key, so old entries are simply never matched again.
-const CACHE_VERSION = 'v2';
+const CACHE_VERSION = 'v3';
 
 export async function onRequestGet(context) {
   const { env, request } = context;
@@ -31,23 +37,23 @@ export async function onRequestGet(context) {
   if (cached) return cached;
 
   if (!env.GOOGLE_PLACES_API_KEY) {
-    return jsonResponse({ error: 'Reviews are not configured yet.' }, 503);
+    return emptyResponse(context, cacheKey, 'Reviews are not configured yet.');
   }
 
   try {
     const placeId = await resolvePlaceId(env.GOOGLE_PLACES_API_KEY);
     if (!placeId) {
-      return jsonResponse({ error: 'Could not locate the business listing.' }, 502);
+      return emptyResponse(context, cacheKey, 'Could not locate the business listing yet.');
     }
 
     const details = await fetchPlaceDetails(placeId, env.GOOGLE_PLACES_API_KEY);
 
     // Second safety check, independent of resolvePlaceId's own check — never
     // serve another business's real reviews under GH1's name.
-    var detailsName = (details.displayName && details.displayName.text || '').toLowerCase();
-    var detailsPhone = details.nationalPhoneNumber || '';
+    const detailsName = (details.displayName && details.displayName.text || '').toLowerCase();
+    const detailsPhone = details.nationalPhoneNumber || '';
     if (detailsName.indexOf('gh1') === -1 && detailsPhone.indexOf('405-5213') === -1) {
-      return jsonResponse({ error: 'Resolved place did not match GH1 Construction.' }, 502);
+      return emptyResponse(context, cacheKey, 'Resolved place did not match GH1 Construction.');
     }
 
     const payload = {
@@ -64,12 +70,18 @@ export async function onRequestGet(context) {
       fetchedAt: new Date().toISOString(),
     };
 
-    const response = jsonResponse(payload, 200, CACHE_TTL_SECONDS);
+    const response = jsonResponse(payload, 200, SUCCESS_CACHE_SECONDS);
     context.waitUntil(cache.put(cacheKey, response.clone()));
     return response;
   } catch (err) {
-    return jsonResponse({ error: 'Unable to fetch reviews right now.' }, 502);
+    return emptyResponse(context, cacheKey, 'Unable to fetch reviews right now: ' + err.message);
   }
+}
+
+function emptyResponse(context, cacheKey, reason) {
+  const response = jsonResponse({ reviews: [], reason }, 200, EMPTY_CACHE_SECONDS);
+  context.waitUntil(caches.default.put(cacheKey, response.clone()));
+  return response;
 }
 
 async function resolvePlaceId(apiKey) {
@@ -91,9 +103,9 @@ async function resolvePlaceId(apiKey) {
   // blindly — only accept a result whose name or phone number actually
   // matches GH1, otherwise it's safer to show nothing than someone else's
   // real reviews under GH1's name.
-  var match = data.places.find(function (p) {
-    var name = (p.displayName && p.displayName.text || '').toLowerCase();
-    var phone = p.nationalPhoneNumber || '';
+  const match = data.places.find((p) => {
+    const name = (p.displayName && p.displayName.text || '').toLowerCase();
+    const phone = p.nationalPhoneNumber || '';
     return name.indexOf('gh1') !== -1 || phone.indexOf('405-5213') !== -1;
   });
   return match ? match.id : null;
